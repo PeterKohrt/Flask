@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect #, request, Flask 
 from webshop import app
 from webshop.models import Article
-from webshop.forms import RegistrationForm, LoginForm
+from webshop.forms import RegistrationForm, LoginForm, ArticleForm
 
 """from flask_restplus import Resource, Api
 
@@ -45,3 +45,8 @@ def login():
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', title='Login', form=form)
+
+@app.route("/article_add", methods=['GET', 'POST'])
+def article_add():
+    form = ArticleForm()
+    return render_template('article_add.html', title='Add Article', form=form)
