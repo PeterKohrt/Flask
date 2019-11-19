@@ -1,5 +1,5 @@
 from flask import render_template, url_for, flash, redirect #, request, Flask 
-from webshop import app
+from webshop import app, db
 from webshop.models import Article
 from webshop.forms import RegistrationForm, LoginForm, ArticleForm
 
@@ -49,4 +49,10 @@ def login():
 @app.route("/article_add", methods=['GET', 'POST'])
 def article_add():
     form = ArticleForm()
+    if form.validate_on_submit():
+        article_x = Article(name=form.name.data, price=form.price.data, description=form.description.data)
+        db.session.add(article_x)
+        db.session.commit()
+        flash(f'Article {form.name.data} added!', 'success')
+        return redirect(url_for('article_add'))
     return render_template('article_add.html', title='Add Article', form=form)
