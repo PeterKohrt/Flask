@@ -3,21 +3,6 @@ from webshop import app, db
 from webshop.models import Article
 from webshop.forms import RegistrationForm, LoginForm, ArticleForm
 
-"""from flask_restplus import Resource, Api
-
-todos = {}
-api = Api(app)
-
-@api.route('/<string:todo_id>')
-class TodoSimple(Resource):
-    def get(self, todo_id):
-        return {todo_id: todos[todo_id]}
-
-    def put(self, todo_id):
-        todos[todo_id] = request.form['data']
-        return {todo_id: todos[todo_id]}
-"""
-
 @app.route("/")
 @app.route("/home")
 def home():
@@ -46,13 +31,13 @@ def login():
             flash('Login Unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-@app.route("/article_add", methods=['GET', 'POST'])
-def article_add():
+@app.route("/article", methods=['GET', 'POST'])
+def article():
     form = ArticleForm()
     if form.validate_on_submit():
         article_x = Article(name=form.name.data, price=form.price.data, description=form.description.data)
         db.session.add(article_x)
         db.session.commit()
         flash(f'Article {form.name.data} added!', 'success')
-        return redirect(url_for('article_add'))
-    return render_template('article_add.html', title='Add Article', form=form)
+        return redirect(url_for('article'))
+    return render_template('article.html', title='Article', form=form)
