@@ -6,7 +6,8 @@ from webshop.forms import RegistrationForm, LoginForm, ArticleForm
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html')
+    article_list = Article.query.all()
+    return render_template('home.html', posts=article_list)
 
 @app.route("/about")
 def about():
