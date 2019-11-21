@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from webshop.models import Article
 
 
 class RegistrationForm(FlaskForm):
@@ -27,4 +28,10 @@ class ArticleForm(FlaskForm):
     description = StringField('Description')
     # image = Input for Article Image 
     submit = SubmitField('Send')
+
+# This method checks if article already exists
+    def validate_name(self, name):
+        article = Article.query.filter_by(name=name.data).first()
+        if article:
+            raise ValueError('This article already exists')
     
