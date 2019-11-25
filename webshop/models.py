@@ -1,4 +1,4 @@
-from webshop import db
+from webshop import db, login_manager
 
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key = True)

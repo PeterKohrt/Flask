@@ -2,6 +2,7 @@ from flask import render_template, url_for, flash, redirect #, request, Flask
 from webshop import app, db
 from webshop.models import Article
 from webshop.forms import RegistrationForm, LoginForm, ArticleForm
+from flask_login import login_required
 
 @app.route("/")
 @app.route("/home")
@@ -29,7 +30,7 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'admin@blog.com' and form.password.data == 'password':
+        if form.email.data == 'admin@webshop.com' and form.password.data == 'password':
             flash('You have been logged in!', 'success')
             return redirect(url_for('home'))
         else:
@@ -37,6 +38,7 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 @app.route("/article", methods=['GET', 'POST'])
+#@login_required -> needs current_user / remember data
 def article():
     form = ArticleForm()
     if form.validate_on_submit():
