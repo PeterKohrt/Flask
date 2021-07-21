@@ -1,6 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 *.html linguist-detectable=false
-*.powershell linguist-detectable=false
+*.ps1 linguist-detectable=false
 *.css linguist-detectable=false
-*.batchfile linguist-detectable=false
+*.bat linguist-detectable=false
